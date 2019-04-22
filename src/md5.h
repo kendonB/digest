@@ -9,6 +9,10 @@
 #define uint32 unsigned long int
 #endif
 
+#ifndef uint64
+#define uint64 unsigned long long int
+#endif
+
 typedef struct
 {
     uint32 total[2];
@@ -18,7 +22,7 @@ typedef struct
 md5_context;
 
 void md5_starts( md5_context *ctx );
-void md5_update( md5_context *ctx, uint8 *input, uint32 length );
+void md5_update( md5_context *ctx, uint8 *input, uint64 length );
 void md5_finish( md5_context *ctx, uint8 digest[16] );
 
 #endif /* md5.h */

@@ -158,7 +158,7 @@ void md5_process( md5_context *ctx, uint8 data[64] )
     ctx->state[3] += D;
 }
 
-void md5_update( md5_context *ctx, uint8 *input, uint32 length )
+void md5_update( md5_context *ctx, uint8 *input, uint64 length )
 {
     uint32 left, fill;
 
