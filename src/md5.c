@@ -109,7 +109,7 @@ void md5_process( md5_context *ctx, uint8 data[64] )
     P( B, C, D, A, 12, 20, 0x8D2A4C8A );
 
 #undef F
-    
+
 #define F(x,y,z) (x ^ y ^ z)
 
     P( A, B, C, D,  5,  4, 0xFFFA3942 );
@@ -158,9 +158,9 @@ void md5_process( md5_context *ctx, uint8 data[64] )
     ctx->state[3] += D;
 }
 
-void md5_update( md5_context *ctx, uint8 *input, uint32 length )
+void md5_update( md5_context *ctx, uint8 *input, uint64 length )
 {
-    uint32 left, fill;
+    uint64 left, fill;
 
     if( ! length ) return;
 
@@ -239,7 +239,7 @@ void md5_finish( md5_context *ctx, uint8 digest[16] )
  * those are the standard RFC 1321 test vectors
  */
 
-static char *msg[] = 
+static char *msg[] =
 {
     "",
     "a",
