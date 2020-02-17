@@ -21,6 +21,7 @@
 
 */
 
+#include <Rdefines.h>
 #include <R_ext/Rdynload.h>
 #include "xxhash.h"
 #include "pmurhash.h"
