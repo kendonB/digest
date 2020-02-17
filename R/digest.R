@@ -139,7 +139,7 @@ digest <- function(object, algo=c("md5", "sha1", "crc32", "sha256", "sha512",
                      as.integer(skip),
                      as.integer(raw),
                      as.integer(seed))
-    } else if (algo =="spookyhash"){
+    } else if (algo == "spookyhash"){
         val <- paste(.Call(R_spookydigest, object, NULL, PACKAGE="digest"), collapse="")
     }
 
