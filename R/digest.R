@@ -19,7 +19,7 @@
 ##  along with digest.  If not, see <http://www.gnu.org/licenses/>.
 
 
-digest <- function(object, algo=c("md5", "sha1", "crc32", "sha256", "sha256_new", "sha512",
+digest <- function(object, algo=c("md5", "sha1", "crc32", "sha256", "sha512",
                                   "xxhash32", "xxhash64", "murmur32", "spookyhash"),
                    serialize=TRUE,
                    file=FALSE,
@@ -55,12 +55,14 @@ digest <- function(object, algo=c("md5", "sha1", "crc32", "sha256", "sha256_new"
     }
 
     streaming_algos <- c("spookyhash")
+    non_streaming_algos <- c("md5", "sha1", "crc32", "sha256", "sha512",
+                             "xxhash32", "xxhash64", "murmur32")
     if(algo %in% streaming_algos && !serialize){
         .errorhandler(paste0(algo, " algorithm is not available without serialization."),
                       mode=errormode)
     }
 
-    if (serialize && !file && !(algo %in% streaming_algos)) {
+    if (serialize && !file && algo %in% non_streaming_algos) {
         ## support the 'nosharing' option in pqR's base::serialize()
         object <- if ("nosharing" %in% names(formals(base::serialize)))
                       base::serialize (object, connection=NULL, ascii=ascii,
@@ -85,7 +87,7 @@ digest <- function(object, algo=c("md5", "sha1", "crc32", "sha256", "sha256_new"
             ## Was: skip <- if (ascii) 18 else 14
         }
     } else if (!is.character(object) && !inherits(object,"raw") &&
-               !(algo %in% streaming_algos)) {
+               algo %in% non_streaming_algos) {
         return(.errorhandler(paste("Argument object must be of type character",		    # #nocov
                                    "or raw vector if serialize is FALSE"), mode=errormode)) # #nocov
     }
@@ -129,7 +131,7 @@ digest <- function(object, algo=c("md5", "sha1", "crc32", "sha256", "sha256_new"
     ## into 0 because auto should have been converted into a number earlier
     ## if it was valid [SU]
     if (is.character(skip)) skip <- 0
-    if(algo != "spookyhash"){
+    if(algo %in% non_streaming_algos){
         val <- .Call(digest_impl,
                      object,
                      as.integer(algoint),

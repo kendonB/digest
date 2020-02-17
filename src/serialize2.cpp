@@ -47,9 +47,8 @@ static SEXP CallHook(SEXP x, SEXP fun)
 extern "C" SEXP R_spookydigest(SEXP s, SEXP fun)
 {
     SpookyHash spooky;
-    uint64 seed1 = 100000, seed2 = 9872143234;
+    uint64 seed1 = 0, seed2 = 0;
     spooky.Init(seed1, seed2);
-    int dummy;
     R_outpstream_st spooky_stream;
     R_pstream_format_t type = R_pstream_binary_format;
     SEXP (*hook)(SEXP, SEXP);
